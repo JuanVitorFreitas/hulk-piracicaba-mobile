@@ -24,4 +24,17 @@ export default StyleSheet.create({
         textAlign: 'center',
         color: '#fff',
     },
+    phone: {
+        textAlign: 'center',
+        fontSize: 16,
+        color: '#fff',  
+    },
+    actionText: {
+        textAlign: 'center',
+        fontSize: 20,
+        color: '#fff',
+        fontWeight: 'bold',
+        textAlignVertical: 'center',
+        flex: 1,
+    }
 });

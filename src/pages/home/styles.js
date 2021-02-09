@@ -1,8 +1,6 @@
 import { StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
 
-
-
 export default StyleSheet.create({
     text: {
         color: 'white',
@@ -20,8 +18,6 @@ export default StyleSheet.create({
         flex: 1,
         paddingHorizontal: 20,
     },
-
-
 });
 
 
