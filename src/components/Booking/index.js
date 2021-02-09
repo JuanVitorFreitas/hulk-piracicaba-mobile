@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text, Animated, Easing } from 'react-native';
 import React from 'react';
 import styles from './styles';
 import { DateTime } from 'luxon';
@@ -14,14 +14,14 @@ const types = {
 };
 
 const LeftAction = () => (
-    <View style={ [ styles.booking, { backgroundColor: '#20bf6b' } ] }>
-        <Text style={ styles.actionText }>Agendamento finalizado</Text>    
+    <View style={[styles.booking, { backgroundColor: '#20bf6b' }]}>
+        <Text style={styles.actionText}>Agendamento finalizado</Text>
     </View>
 );
 
 const RightAction = () => (
-    <View style={ [ styles.booking, { backgroundColor: '#eb3b5a' } ] }>
-        <Text style={ styles.actionText }>Agendamento removido</Text>    
+    <View style={[styles.booking, { backgroundColor: '#eb3b5a' }]}>
+        <Text style={styles.actionText}>Agendamento removido</Text>
     </View>
 );
 
@@ -29,11 +29,22 @@ const RightAction = () => (
 export default function Booking({ booking }) {
     const { name, type, startsAt, phone, id } = booking;
 
+    const maxHeightAnim = useRef(new Animated.Value(150)).current;
+
+    const animateClose = () => {
+        Animated.timing(maxHeightAnim, {
+            toValue: 0,
+            duration: 300,
+            easing: Easing.inOut(Easing.ease),
+        }).start();
+    };
+
     async function finishBooking() {
         try {
-            const response = await api.patch(`/bookings/${id}`, {
+            await api.patch(`/bookings/${id}`, {
                 done: true,
             });
+            animateClose();
             console.log('Agendamento finalizado');
         } catch {
             alert('Falha ao finalizar agendamento.');
@@ -42,8 +53,9 @@ export default function Booking({ booking }) {
 
     async function deleteBooking() {
         try {
-            const response = await api.delete(`/bookings/${id}`);
-            console.log('Agendamento removido')
+            await api.delete(`/bookings/${id}`);
+            animateClose();
+            console.log('Agendamento removido');
         } catch {
             alert('Falha ao cancelar agendamento.');
         }
@@ -56,7 +68,7 @@ export default function Booking({ booking }) {
             onSwipeableRightOpen={() => deleteBooking()}
             renderRightActions={RightAction}
         >
-            <View style={styles.booking}>
+            <View style={[ styles.booking, { maxHeight: maxHeightAnim }]}>
                 <Text style={styles.name}>{name}</Text>
                 <Text style={styles.type}>{types[type]}</Text>
                 <Text style={styles.startsAt}>{DateTime.fromISO(startsAt).toFormat('dd/MM/yyyy hh:mm')}</Text>
