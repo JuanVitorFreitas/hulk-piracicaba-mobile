@@ -1,5 +1,5 @@
 import { View, Text, Animated, Easing } from 'react-native';
-import React from 'react';
+import React, { useRef } from 'react';
 import styles from './styles';
 import { DateTime } from 'luxon';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
@@ -25,7 +25,6 @@ const RightAction = () => (
     </View>
 );
 
-
 export default function Booking({ booking }) {
     const { name, type, startsAt, phone, id } = booking;
 
@@ -46,7 +45,8 @@ export default function Booking({ booking }) {
             });
             animateClose();
             console.log('Agendamento finalizado');
-        } catch {
+        } catch (err) {
+            console.error(err);
             alert('Falha ao finalizar agendamento.');
         }
     }
@@ -56,7 +56,8 @@ export default function Booking({ booking }) {
             await api.delete(`/bookings/${id}`);
             animateClose();
             console.log('Agendamento removido');
-        } catch {
+        } catch(err) {
+            console.error(err);
             alert('Falha ao cancelar agendamento.');
         }
     }
@@ -68,12 +69,12 @@ export default function Booking({ booking }) {
             onSwipeableRightOpen={() => deleteBooking()}
             renderRightActions={RightAction}
         >
-            <View style={[ styles.booking, { maxHeight: maxHeightAnim }]}>
+            <Animated.View style={[ styles.booking, { maxHeight: maxHeightAnim }]}>
                 <Text style={styles.name}>{name}</Text>
                 <Text style={styles.type}>{types[type]}</Text>
                 <Text style={styles.startsAt}>{DateTime.fromISO(startsAt).toFormat('dd/MM/yyyy hh:mm')}</Text>
                 <Text style={styles.phone}>{parsePhoneNumberFromString(phone).format('NATIONAL')}</Text>
-            </View>
+            </Animated.View>
         </Swipeable>
     )
 };

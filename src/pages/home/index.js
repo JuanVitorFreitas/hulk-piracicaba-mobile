@@ -2,12 +2,20 @@ import { View, Text, FlatList, RefreshControl, TouchableOpacity } from 'react-na
 import React, {useRef, useState, useEffect} from 'react';
 import styles from './styles';
 import Booking from '../../components/Booking';
-import api from '../../services/api';
+import api, { Credentials, refreshCredentials } from '../../services/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+
+
+// const AuthContext = createContext({});
 
 
 export default function Home() {
     const [refreshing, setRefreshing] = useState(false);
     const [bookings, setBookings] = useState([]);
+    const route = useRoute();
+    const { accessToken } = route.params;
 
     const page = useRef(1);
     const totalCount = useRef(-1);
@@ -15,6 +23,7 @@ export default function Home() {
     const handleRefresh = () => {
         getBookings(true);
     };
+
 
     async function getBookings(isRefresh) {
         if (isRefresh) {
@@ -25,7 +34,12 @@ export default function Home() {
             return;
         }
         console.log(`Carregando pagina ${page.current}`);
-        const res = await api.get('/bookings', { params: { page: page.current } });
+        const res = await api.get('/bookings', {
+            params: { page: page.current }, headers: {
+                authorization: `Bearer ${accessToken}`
+            }
+        });
+
 
         totalCount.current = res.headers['x-total-count'];
 
