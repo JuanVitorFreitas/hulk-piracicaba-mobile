@@ -1,6 +1,6 @@
 import axios from 'axios';
 
 export default axios.create({
-    baseURL: 'http://10.0.0.110:3333',
-    timeout: 5000,
+    baseURL: true ? 'https://api.barbeariahulkpiracicaba.com.br' : 'https://api.barbeariahulkpiracicaba.com.br/',
+    timeout: 500,
 });

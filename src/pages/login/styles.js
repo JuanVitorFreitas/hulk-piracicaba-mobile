@@ -32,7 +32,7 @@ export default StyleSheet.create({
         marginVertical: 5,
     },
     title: {
-        fontSize: 20,
+        fontSize: 19,
         alignSelf: 'center',
         marginBottom: 50,
     }

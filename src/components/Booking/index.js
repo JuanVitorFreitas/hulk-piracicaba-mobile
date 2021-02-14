@@ -72,7 +72,7 @@ export default function Booking({ booking }) {
             <Animated.View style={[ styles.booking, { maxHeight: maxHeightAnim }]}>
                 <Text style={styles.name}>{name}</Text>
                 <Text style={styles.type}>{types[type]}</Text>
-                <Text style={styles.startsAt}>{DateTime.fromISO(startsAt).toFormat('dd/MM/yyyy hh:mm')}</Text>
+                <Text style={styles.startsAt}>{DateTime.fromISO(startsAt).toFormat('dd/MM/yyyy HH:mm')}</Text>
                 <Text style={styles.phone}>{parsePhoneNumberFromString(phone).format('NATIONAL')}</Text>
             </Animated.View>
         </Swipeable>

@@ -6,6 +6,7 @@ import api, { Credentials, refreshCredentials } from '../../services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRoute } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
+import orderBy from "lodash.orderby";
 
 
 // const AuthContext = createContext({});
@@ -45,7 +46,7 @@ export default function Home() {
 
         page.current += 1;
         if (isRefresh) {
-            setBookings(res.data);
+            setBookings(orderBy(res.data.filter((b => new Date(b.startsAt).getTime() >= (Date.now() - (60 * 1000))), 'startsAt', "asc")));
             setRefreshing(false);
         } else {
             setBookings([...bookings, ...res.data]);

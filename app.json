@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "hulk-piracicaba-mobile",
-    "slug": "hulk-piracicaba-mobile",
-    "version": "1.0.0",
+    "name": "Agendamentos Hulk",
+    "slug": "hulk-mobile",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -23,7 +23,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "br.com.barbeariahulkpiracicaba"
     },
     "web": {
       "favicon": "./assets/favicon.png"

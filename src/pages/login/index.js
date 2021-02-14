@@ -44,7 +44,7 @@ export default function Login() {
     return (
         <View style={styles.container}>
             <View style={styles.loginContainer}>
-                <Text style={styles.title}>Entrar para ver agendamentos</Text>
+                <Text style={styles.title}>Acesse para ver os agendamentos</Text>
                 <TextInput
                     placeholder='Nome de usuário'
                     onChangeText={setUsername}
